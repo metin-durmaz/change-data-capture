@@ -1,0 +1,16 @@
+{
+    "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+    "tasks.max": "1",
+    "database.hostname": "postgres",
+    "database.port": "5432",
+    "database.user": "postgres",
+    "database.password": "123456",
+    "database.dbname": "mydb",
+    "database.server.name": "myserver",
+    "tombstones.on.delete": "false",
+    "snapshot.mode": "never",
+    "transforms": "Combine",
+    "transforms.Combine.type": "io.debezium.transforms.ByLogicalTableRouter",
+    "transforms.Combine.topic.regex": "myserver.(.*).(.*)",
+    "transforms.Combine.topic.replacement": "myserver.all_schemas.all_tables"
+}

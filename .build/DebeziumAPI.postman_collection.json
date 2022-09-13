@@ -1,0 +1,116 @@
+{
+	"info": {
+		"_postman_id": "64e0f505-5a43-4a9e-a620-29975278d16b",
+		"name": "DebeziumAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16943660"
+	},
+	"item": [
+		{
+			"name": "Create Connector",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"my-connector\",\r\n    \"config\": {\r\n        \"connector.class\": \"io.debezium.connector.postgresql.PostgresConnector\",\r\n        \"tasks.max\": \"1\",\r\n        \"database.hostname\": \"postgres\",\r\n        \"database.port\": \"5432\",\r\n        \"database.user\": \"postgres\",\r\n        \"database.password\": \"123456\",\r\n        \"database.dbname\": \"mydb\",\r\n        \"database.server.name\": \"myserver\",\r\n        \"tombstones.on.delete\": \"false\",\r\n        \"snapshot.mode\": \"never\",\r\n        \"transforms\": \"Combine\",\r\n        \"transforms.Combine.type\": \"io.debezium.transforms.ByLogicalTableRouter\",\r\n        \"transforms.Combine.topic.regex\": \"myserver.(.*).(.*)\",\r\n        \"transforms.Combine.topic.replacement\": \"myserver.all_schemas.all_tables\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8083/connectors/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8083",
+					"path": [
+						"connectors",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Connectors",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8083/connectors/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8083",
+					"path": [
+						"connectors",
+						""
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Connector",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"connector.class\": \"io.debezium.connector.postgresql.PostgresConnector\",\r\n    \"tasks.max\": \"1\",\r\n    \"database.hostname\": \"postgres\",\r\n    \"database.port\": \"5432\",\r\n    \"database.user\": \"postgres\",\r\n    \"database.password\": \"123456\",\r\n    \"database.dbname\": \"mydb\",\r\n    \"database.server.name\": \"myserver\",\r\n    \"tombstones.on.delete\": \"false\",\r\n    \"snapshot.mode\": \"never\",\r\n    \"transforms\": \"Combine\",\r\n    \"transforms.Combine.type\": \"io.debezium.transforms.ByLogicalTableRouter\",\r\n    \"transforms.Combine.topic.regex\": \"myserver.(.*).(.*)\",\r\n    \"transforms.Combine.topic.replacement\": \"myserver.all_schemas.all_tables\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8083/connectors/my-connector/config",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8083",
+					"path": [
+						"connectors",
+						"my-connector",
+						"config"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Connector",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8083/connectors/my-connector",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8083",
+					"path": [
+						"connectors",
+						"my-connector"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
