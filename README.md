@@ -3,15 +3,15 @@ In this project, we will implement change Data Capture software design with Debe
 
 ![Architecture](https://github.com/metin-durmaz/change-data-capture/blob/main/cdc-with-debezium.png)
 
-# Installing
+## Installing
 
-### Up Required Services
+#### Up Required Services
 
 ```
 docker-compose up
 ```
 
-### Create Debezium Connector
+#### Create Debezium Connector
 
 ```
 curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" http://localhost:8083/connectors/ -d @$PWD/create-connector.json
@@ -41,7 +41,7 @@ curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" 
 }
 ```
 
-### Create Required Keyspace and Tables in Cassandra
+#### Create Required Keyspace and Tables in Cassandra
 
 ```
 docker exec -it cassandra cqlsh -u cassandra -p cassandra
@@ -57,13 +57,13 @@ create table ddl_change(id uuid primary key, object_name text, operation text, d
 create table dml_change(id uuid primary key, table_name text, operation text, date text,before text, after text);
 ```
 
-### Up Spring Boot Application
+#### Up Spring Boot Application
 
 ```
 docker run -d --name spring-boot-cdc -p 8080:8080 --env-file .env --network=cdc-network metin123/spring-boot-cdc
 ```
 
-### Connect the Postgresql Database and Execute Some Queries
+#### Connect the Postgresql Database and Execute Some Queries
 
 ```
 CREATE TABLE person (
@@ -103,7 +103,7 @@ AS $$
 $$;
 ```
 
-### To See Kafka Logs
+#### To See Kafka Logs
 
 ```
 docker-compose -f docker-compose.yml exec kafka /kafka/bin/kafka-console-consumer.sh --bootstrap-server kafka:9092 --from-beginning --property print.key=true --topic myserver.all_schemas.all_tables > log.json
